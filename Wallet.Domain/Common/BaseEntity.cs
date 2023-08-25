@@ -8,23 +8,23 @@ namespace Wallet.Domain.Common
 
     public interface IBaseEntity<out TKey> : IBaseEntity
     {
-        public TKey Id { get; }
+        public TKey? Id { get; }
     }
 
     public abstract class BaseEntity<TKey> : IBaseEntity<TKey>
     {
-        public virtual TKey Id { get; set; }
+        public virtual TKey? Id { get; set; }
         [Timestamp]
-        public byte[] RowVersion { get; set; } = null;
+        public byte[]? RowVersion { get; set; } = null;
 
         //public DateTimeOffset CreatedDateTime => DateTimeOffset.UtcNow;
         //public DateTimeOffset? UpdatedDateTime { get; set; }
 
-        private int? _requestedHashCode;
+        private int? _requestedHashCode = 0;
 
         public bool IsTransient()
         {
-            return Id.Equals(default(TKey));
+            return Id != null && Id.Equals(default(TKey));
         }
 
         public override bool Equals(object? obj)
@@ -65,7 +65,7 @@ namespace Wallet.Domain.Common
             return !(left == right);
         }
     }
-    public abstract class BaseEntity : BaseEntity<int>
+    public abstract class BaseEntity : BaseEntity<Guid>
     {
         public bool Deleted { get; set; }
     }

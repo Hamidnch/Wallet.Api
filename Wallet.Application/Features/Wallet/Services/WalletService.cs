@@ -9,14 +9,19 @@ public class WalletService : IWalletService
 {
     private readonly IWalletRepository _walletRepository;
 
-    public WalletService(IWalletRepository walletRepository)
+    private readonly IUserRepository _userRepository;
+
+    public WalletService(IWalletRepository walletRepository, IUserRepository userRepository)
     {
         _walletRepository = walletRepository;
+        _userRepository = userRepository;
     }
 
-    public async Task<Domain.Entities.Wallet> GetByUserIdAsync(Guid userId)
+    public async Task<Domain.Entities.Wallet?> GetByUserIdAsync(Guid userId)
     {
-        return await _walletRepository.GetByUserIdAsync(userId);
+        var user = await _userRepository.GetByIdAsync(userId);
+
+        return user?.Wallet;
     }
 
     public async Task<Unit> IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount)

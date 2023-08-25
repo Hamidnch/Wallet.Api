@@ -5,6 +5,10 @@ namespace Wallet.Domain.Common
     public readonly struct PositiveMoney
     {
         private readonly Money _money;
+        public PositiveMoney()
+        {
+            _money = new Money(0m);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PositiveMoney"/> struct.

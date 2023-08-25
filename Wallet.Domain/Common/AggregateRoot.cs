@@ -2,7 +2,7 @@
 
 namespace Wallet.Domain.Common
 {
-    public abstract class AggregateRoot : BaseEntity<Guid>
+    public abstract class AggregateRoot : BaseEntity
     {
         private readonly List<BaseEvent> _domainEvents = new List<BaseEvent>();
 

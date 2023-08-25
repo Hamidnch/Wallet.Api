@@ -16,6 +16,10 @@ public class WalletTransactionsQueryHandler : IRequestHandler<GetWalletTransacti
     public async Task<IReadOnlyList<TransactionWalletDto>> Handle(GetWalletTransactionsQuery query, CancellationToken cancellationToken)
     {
         var wallet = await _walletService.GetByUserIdAsync(query.UserId);
+
+        if (wallet is null)
+            return new List<TransactionWalletDto>();
+
         var transactionDto = wallet.Transactions
             .Select(p =>
                 new TransactionWalletDto(p.Type, p.LastUpdated, p.Amount, p.NonCashSource))

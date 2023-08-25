@@ -44,7 +44,7 @@ namespace Wallet.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("transactions")]
+        [HttpGet("transactions/{walletId}")]
         public async Task<IActionResult> GetWalletTransactions(Guid walletId)
         {
             var query = new GetWalletTransactionsQuery(walletId);

@@ -1,0 +1,7 @@
+
+dotnet ef migrations add "Init" -c WalletDbContext --project ..\Wallet.Persistence
+
+OR
+
+dotnet ef migrations add "Init" -c WalletDbContext --startup-project ..\Wallet.Api
+dotnet ef database update -c WalletDbContext --startup-project ..\Wallet.Api\

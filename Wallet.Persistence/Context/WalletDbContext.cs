@@ -8,7 +8,7 @@ namespace Wallet.Persistence.Context
 {
     public class WalletDbContext : DbContext
     {
-        public WalletDbContext(DbContextOptions options) : base(options)
+        public WalletDbContext(DbContextOptions<WalletDbContext> options) : base(options)
         {
         }
 
@@ -23,6 +23,16 @@ namespace Wallet.Persistence.Context
             modelBuilder.HasDefaultSchema(DefaultConstants.DefaultSchema);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
+
+        public Task<int> ExecuteSqlRawAsync(string query, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> ExecuteSqlRawAsync(string query)
+        {
+            throw new NotImplementedException();
         }
     }
 }

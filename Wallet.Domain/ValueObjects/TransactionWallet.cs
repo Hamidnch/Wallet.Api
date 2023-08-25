@@ -1,14 +1,17 @@
 ﻿using Wallet.Domain.Common;
 using Wallet.Domain.Enums;
+using Wallet.Domain.Events;
 
 namespace Wallet.Domain.ValueObjects;
 
-public class TransactionWallet : ValueObject<TransactionWallet>
+public class TransactionWallet : AggregateRoot //: ValueObject<TransactionWallet>
 {
     public TransactionType Type { get; private set; }
     public DateTime LastUpdated { get; private set; }
     public PositiveMoney Amount { get; private set; }
     public NonCashSource NonCashSource { get; private set; }
+
+    //public Entities.Wallet Wallet { get; set; } = new Entities.Wallet();
 
     public TransactionWallet(TransactionType type,
         PositiveMoney amount, DateTime lastUpdated,
@@ -20,11 +23,16 @@ public class TransactionWallet : ValueObject<TransactionWallet>
         LastUpdated = lastUpdated;
     }
 
-    protected override IEnumerable<object> GetEqualityComponents()
+    //protected override IEnumerable<object> GetEqualityComponents()
+    //{
+    //    yield return Type;
+    //    yield return Amount;
+    //    yield return NonCashSource;
+    //    yield return LastUpdated;
+    //}
+
+    public override void AddEvent(BaseEvent domainEvent)
     {
-        yield return Type;
-        yield return Amount;
-        yield return NonCashSource;
-        yield return LastUpdated;
+        throw new NotImplementedException();
     }
 }

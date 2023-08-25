@@ -21,7 +21,10 @@ services.AddDbContext<WalletDbContext>(options =>
     options.UseSqlServer(configuration.GetConnectionString("WalletDb")));
 
 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
 services.AddScoped<IWalletRepository, WalletRepository>();
+services.AddScoped<IUserRepository, UserRepository>();
+
 services.AddScoped<IWalletService, WalletService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

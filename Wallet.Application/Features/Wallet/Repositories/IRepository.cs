@@ -1,6 +1,8 @@
-﻿namespace Wallet.Application.Features.Wallet.Repositories;
+﻿using Wallet.Domain.Common;
 
-public interface IRepository<T> where T : class
+namespace Wallet.Application.Features.Wallet.Repositories;
+
+public interface IRepository<T> where T : BaseEntity
 {
     Task<T?> GetByIdAsync(Guid id);
     Task<IEnumerable<T?>> GetAllAsync();
