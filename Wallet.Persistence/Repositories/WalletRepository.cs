@@ -12,7 +12,7 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
     {
     }
 
-    public async Task<Domain.Entities.Wallet> GetByUserIdAsync(Guid userId)
+    public async Task<Domain.Entities.Wallet?> GetByUserIdAsync(Guid userId)
     {
         var user = await Context.Set<User>().FindAsync(userId)
                    ?? throw new Exception("user is null");
@@ -23,28 +23,44 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
     public async Task IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount)
     {
         var wallet = await GetByUserIdAsync(userId);
-        wallet.IncreaseCash(amount);
-        await UpdateAsync(wallet);
+
+        if (wallet is not null)
+        {
+            wallet.IncreaseCash(amount);
+            await UpdateAsync(wallet);
+        }
     }
 
     public async Task IncreaseNonCashBalanceAsync(Guid userId, PositiveMoney amount, NonCashSource nonCashSource)
     {
         var wallet = await GetByUserIdAsync(userId);
-        wallet.IncreaseNonCash(amount, nonCashSource);
-        await UpdateAsync(wallet);
+
+        if (wallet is not null)
+        {
+            wallet.IncreaseNonCash(amount, nonCashSource);
+            await UpdateAsync(wallet);
+        }
     }
 
     public async Task DecreaseCashBalanceAsync(Guid userId, PositiveMoney amount)
     {
         var wallet = await GetByUserIdAsync(userId);
-        wallet.DecreaseCash(amount);
-        await UpdateAsync(wallet);
+
+        if (wallet is not null)
+        {
+            wallet.DecreaseCash(amount);
+            await UpdateAsync(wallet);
+        }
     }
 
     public async Task IncreaseCashFromReturnAsync(Guid userId, PositiveMoney amount)
     {
         var wallet = await GetByUserIdAsync(userId);
-        wallet.IncreaseCashFromReturn(amount);
-        await UpdateAsync(wallet);
+
+        if (wallet is not null)
+        {
+            wallet.IncreaseCashFromReturn(amount);
+            await UpdateAsync(wallet);
+        }
     }
 }
