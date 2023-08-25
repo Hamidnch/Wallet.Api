@@ -1,4 +1,7 @@
-﻿namespace Wallet.Application.Features.Wallet.Repositories;
+﻿using Wallet.Domain.Common;
+using Wallet.Domain.Enums;
+
+namespace Wallet.Application.Features.Wallet.Repositories;
 
 public interface IWalletRepository
 {
@@ -7,4 +10,9 @@ public interface IWalletRepository
     Task AddAsync(Domain.Entities.Wallet wallet);
     Task UpdateAsync(Domain.Entities.Wallet wallet);
     Task DeleteAsync(Guid id);
+
+    Task IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount);
+    Task IncreaseNonCashBalanceAsync(Guid userId, PositiveMoney amount, NonCashSource nonCashSource);
+    Task DecreaseCashBalanceAsync(Guid userId, PositiveMoney amount);
+    Task IncreaseCashFromReturnAsync(Guid userId, PositiveMoney amount);
 }

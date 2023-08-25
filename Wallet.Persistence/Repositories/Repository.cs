@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Wallet.Application.Features.Wallet.Services;
+using Wallet.Application.Features.Wallet.Repositories;
 
 namespace Wallet.Persistence.Repositories;
 

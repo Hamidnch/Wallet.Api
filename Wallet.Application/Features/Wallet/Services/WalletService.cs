@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Wallet.Application.Features.Wallet.Services;
+using Wallet.Application.Features.Wallet.Repositories;
 using Wallet.Domain.Common;
 using Wallet.Domain.Enums;
 
-namespace Wallet.Application.Features.Wallet.Repositories;
+namespace Wallet.Application.Features.Wallet.Services;
 
 public class WalletService : IWalletService
 {
@@ -21,36 +21,28 @@ public class WalletService : IWalletService
 
     public async Task<Unit> IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount)
     {
-        var wallet = await _walletRepository.GetByUserIdAsync(userId);
-        wallet.IncreaseCash(amount);
-        await _walletRepository.UpdateAsync(wallet);
+        await _walletRepository.IncreaseCashBalanceAsync(userId, amount);
 
         return Unit.Value;
     }
 
     public async Task<Unit> IncreaseNonCashBalanceAsync(Guid userId, PositiveMoney amount, NonCashSource nonCashSource)
     {
-        var wallet = await _walletRepository.GetByUserIdAsync(userId);
-        wallet.IncreaseNonCash(amount, nonCashSource);
-        await _walletRepository.UpdateAsync(wallet);
+        await _walletRepository.IncreaseNonCashBalanceAsync(userId, amount, nonCashSource);
 
         return Unit.Value;
     }
 
     public async Task<Unit> DecreaseCashBalanceAsync(Guid userId, PositiveMoney amount)
     {
-        var wallet = await _walletRepository.GetByUserIdAsync(userId);
-        wallet.DecreaseCash(amount);
-        await _walletRepository.UpdateAsync(wallet);
+        await _walletRepository.DecreaseCashBalanceAsync(userId, amount);
 
         return Unit.Value;
     }
 
     public async Task<Unit> IncreaseCashFromReturnAsync(Guid userId, PositiveMoney amount)
     {
-        var wallet = await _walletRepository.GetByUserIdAsync(userId);
-        wallet.IncreaseCashFromReturn(amount);
-        await _walletRepository.UpdateAsync(wallet);
+        await _walletRepository.IncreaseCashFromReturnAsync(userId, amount);
 
         return Unit.Value;
     }

@@ -1,4 +1,4 @@
-﻿namespace Wallet.Application.Features.Wallet.Services;
+﻿namespace Wallet.Application.Features.Wallet.Repositories;
 
 public interface IRepository<T> where T : class
 {
