@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using Wallet.Common;
 using Wallet.Domain.Entities;
 using Wallet.Domain.ValueObjects;
 
@@ -17,6 +19,10 @@ namespace Wallet.Persistence.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.HasDefaultSchema(DefaultConstants.DefaultSchema);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }
