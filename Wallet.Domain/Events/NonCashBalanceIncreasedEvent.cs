@@ -5,13 +5,13 @@ namespace Wallet.Domain.Events;
 
 public class NonCashBalanceIncreasedEvent : BaseEvent
 {
-    public Guid WalletId { get; }
+    public Guid UserId { get; }
     public decimal Amount { get; }
     public NonCashSource NonCashSource { get; set; }
 
-    public NonCashBalanceIncreasedEvent(Guid walletId, PositiveMoney amount, NonCashSource nonCashSource)
+    public NonCashBalanceIncreasedEvent(Guid userId, PositiveMoney amount, NonCashSource nonCashSource)
     {
-        WalletId = walletId;
+        UserId = userId;
         Amount = amount.ToDecimal;
         NonCashSource = nonCashSource;
     }

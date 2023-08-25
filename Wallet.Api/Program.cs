@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Wallet.Application.Features.Wallet.Repositories;
+using Wallet.Application.Features.Wallet.Services;
+using Wallet.Persistence.Context;
+using Wallet.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
+var configuration = builder.Configuration;
 
 // Add services to the container.
 
@@ -9,6 +15,13 @@ services.AddControllers();
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+services.AddDbContext<WalletDbContext>(options =>
+    options.UseSqlServer(configuration.GetConnectionString("WalletDb")));
+
+services.AddTransient<IWalletRepository, WalletRepository>();
+services.AddTransient<IWalletService, WalletService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();

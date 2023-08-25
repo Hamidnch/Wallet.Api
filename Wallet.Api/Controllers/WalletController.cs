@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Wallet.Application.Commands;
-using Wallet.Application.Queries;
+using Wallet.Application.Features.Wallet.Commands;
+using Wallet.Application.Features.Wallet.Queries;
 
 namespace Wallet.Api.Controllers
 {

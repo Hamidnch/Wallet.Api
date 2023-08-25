@@ -1,6 +1,7 @@
 ﻿using Wallet.Domain.Common;
 using Wallet.Domain.Enums;
 using Wallet.Domain.Events;
+using Wallet.Domain.ValueObjects;
 
 namespace Wallet.Domain.Entities
 {

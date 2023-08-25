@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.1.1" />
+    <ProjectReference Include="..\Wallet.Domain\Wallet.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Wallet.Application.Contracts\Wallet.Application.Contracts.csproj" />
-    <ProjectReference Include="..\Wallet.Domain\Wallet.Domain.csproj" />
+ <PackageReference Include="MediatR" Version="12.1.1" />
   </ItemGroup>
 
 </Project>

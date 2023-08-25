@@ -1,11 +1,10 @@
 ﻿using MediatR;
-using Wallet.Application.Services;
-using Wallet.Domain.Entities;
+using Wallet.Application.Features.Wallet.Services;
 using Wallet.Domain.Events;
 
-namespace Wallet.Application.Commands.Handlers
+namespace Wallet.Application.Features.Wallet.Commands
 {
-    public class UserCommandHandler :
+    public class WalletCommandHandler :
         IRequestHandler<IncreaseCashCommand>,
         IRequestHandler<IncreaseNonCashCommand>,
         IRequestHandler<DecreaseCashCommand>,
@@ -14,7 +13,7 @@ namespace Wallet.Application.Commands.Handlers
         private readonly IWalletService _walletService;
         private readonly IMediator _mediator;
 
-        public UserCommandHandler(User user, IWalletService walletService, IMediator mediator)
+        public WalletCommandHandler(IWalletService walletService, IMediator mediator)
         {
             _walletService = walletService;
             _mediator = mediator;
@@ -22,8 +21,8 @@ namespace Wallet.Application.Commands.Handlers
 
         public async Task Handle(IncreaseCashCommand command, CancellationToken cancellationToken)
         {
-            await _walletService.IncreaseCashBalanceAsync(command.WalletId, command.Amount);
-            await _mediator.Publish(new CashBalanceIncreasedEvent(command.WalletId,
+            await _walletService.IncreaseCashBalanceAsync(command.UserId, command.Amount);
+            await _mediator.Publish(new CashBalanceIncreasedEvent(command.UserId,
                 command.Amount), cancellationToken);
 
             //_user.AddEvent(new WalletTransactionAddedEvent(_user.Wallet.Id, transaction));
@@ -31,27 +30,27 @@ namespace Wallet.Application.Commands.Handlers
 
         public async Task Handle(IncreaseNonCashCommand command, CancellationToken cancellationToken)
         {
-            await _walletService.IncreaseNonCashBalanceAsync(command.WalletId, command.Amount, command.NonCashSource);
+            await _walletService.IncreaseNonCashBalanceAsync(command.UserId, command.Amount, command.NonCashSource);
             await _mediator.Publish(
-                new NonCashBalanceIncreasedEvent(command.WalletId, command.Amount, command.NonCashSource), cancellationToken);
+                new NonCashBalanceIncreasedEvent(command.UserId, command.Amount, command.NonCashSource), cancellationToken);
 
             //_user.AddEvent(new WalletTransactionAddedEvent(_user.Wallet.Id, transaction));
         }
 
         public async Task Handle(DecreaseCashCommand command, CancellationToken cancellationToken)
         {
-            await _walletService.DecreaseCashBalanceAsync(command.WalletId, command.Amount);
+            await _walletService.DecreaseCashBalanceAsync(command.UserId, command.Amount);
             await _mediator.Publish(
-                new CashBalanceDecreasedEvent(command.WalletId, command.Amount), cancellationToken);
+                new CashBalanceDecreasedEvent(command.UserId, command.Amount), cancellationToken);
 
             //_user.AddEvent(new WalletTransactionAddedEvent(_user.Wallet.Id, transaction));
         }
 
         public async Task Handle(IncreaseCashFromReturnCommand command, CancellationToken cancellationToken)
         {
-            await _walletService.IncreaseCashFromReturnAsync(command.WalletId, command.Amount);
+            await _walletService.IncreaseCashFromReturnAsync(command.UserId, command.Amount);
             await _mediator.Publish(
-                new CashFromReturnIncreasedEvent(command.WalletId, command.Amount), cancellationToken);
+                new CashFromReturnIncreasedEvent(command.UserId, command.Amount), cancellationToken);
 
             //_user.AddEvent(new WalletTransactionAddedEvent(_user.Wallet.Id, transaction));
         }

@@ -1,15 +1,15 @@
-﻿using Wallet.Domain.Entities;
+﻿using Wallet.Domain.ValueObjects;
 
 namespace Wallet.Domain.Events;
 
 public class WalletTransactionAddedEvent : BaseEvent
 {
-    public Guid WalletId { get; private set; }
+    public Guid UserId { get; private set; }
     public TransactionWallet Transaction { get; private set; }
 
-    public WalletTransactionAddedEvent(Guid walletId, TransactionWallet transaction)
+    public WalletTransactionAddedEvent(Guid userId, TransactionWallet transaction)
     {
-        WalletId = walletId;
+        UserId = userId;
         Transaction = transaction;
     }
 }

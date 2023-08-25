@@ -4,12 +4,12 @@ namespace Wallet.Domain.Events;
 
 public class CashFromReturnIncreasedEvent : BaseEvent
 {
-    public Guid WalletId { get; }
+    public Guid UserId { get; }
     public decimal Amount { get; }
 
-    public CashFromReturnIncreasedEvent(Guid walletId, PositiveMoney amount)
+    public CashFromReturnIncreasedEvent(Guid userId, PositiveMoney amount)
     {
-        WalletId = walletId;
+        UserId = userId;
         Amount = amount.ToDecimal;
     }
 }
