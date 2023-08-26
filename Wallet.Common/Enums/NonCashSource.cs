@@ -8,7 +8,7 @@ public enum NonCashSource : byte
     GiftCode,
     [Display(Name = "معرف")]
     Referral,
-    [Display(Name = "سایتهای اقصاطی")]
+    [Display(Name = "سایتهای اقساطی")]
     InstallmentsSites,
     [Display(Name = "سایر")]
     Others

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Wallet.Domain.ValueObjects;
+using Wallet.Domain.Entities;
 
 namespace Wallet.Persistence.Configs;
 

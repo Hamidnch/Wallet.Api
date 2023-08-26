@@ -2,7 +2,7 @@
 using Wallet.Domain.Common;
 using Wallet.Domain.Events;
 
-namespace Wallet.Domain.ValueObjects;
+namespace Wallet.Domain.Entities;
 
 public class TransactionWallet : AggregateRoot //: ValueObject<TransactionWallet>
 {

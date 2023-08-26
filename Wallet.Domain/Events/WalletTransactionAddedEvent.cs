@@ -1,4 +1,4 @@
-﻿using Wallet.Domain.ValueObjects;
+﻿using Wallet.Domain.Entities;
 
 namespace Wallet.Domain.Events;
 
