@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Wallet.Common\Wallet.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ValueObjects\" />
-  </ItemGroup>
-
 </Project>
