@@ -12,7 +12,7 @@ using Wallet.Persistence.Context;
 namespace Wallet.Persistence.Migrations
 {
     [DbContext(typeof(WalletDbContext))]
-    [Migration("20230826062037_Init")]
+    [Migration("20230826072640_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -61,10 +61,10 @@ namespace Wallet.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("CashBalance")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 6)");
 
                     b.Property<decimal>("NonCashBalance")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 6)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -88,7 +88,7 @@ namespace Wallet.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 6)");
 
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime2");

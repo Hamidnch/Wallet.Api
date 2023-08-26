@@ -8,13 +8,13 @@ public class TransactionWallet : AggregateRoot //: ValueObject<TransactionWallet
 {
     public TransactionType Type { get; private set; }
     public DateTime LastUpdated { get; private set; }
-    public PositiveMoney Amount { get; private set; }
+    public decimal Amount { get; private set; }
     public NonCashSource NonCashSource { get; private set; }
 
     //public Entities.Wallet Wallet { get; set; } = new Entities.Wallet();
 
     public TransactionWallet(TransactionType type,
-        PositiveMoney amount, DateTime lastUpdated,
+        decimal amount, DateTime lastUpdated,
         NonCashSource nonCashSource = NonCashSource.Others)
     {
         Type = type;

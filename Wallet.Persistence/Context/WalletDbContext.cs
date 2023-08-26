@@ -3,6 +3,7 @@ using System.Reflection;
 using Wallet.Common.CommonHelpers;
 using Wallet.Domain.Entities;
 using Wallet.Domain.ValueObjects;
+using Wallet.Persistence.Extensions;
 
 namespace Wallet.Persistence.Context
 {
@@ -23,6 +24,11 @@ namespace Wallet.Persistence.Context
             modelBuilder.HasDefaultSchema(DefaultConstants.DefaultSchema);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.SetDecimalPrecision();
+            modelBuilder.AddDateTimeOffsetConverter();
+            modelBuilder.AddDateTimeUtcKindConverter();
+            modelBuilder.AddDecimalConverter();
         }
     }
 }

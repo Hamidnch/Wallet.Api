@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wallet.Application\Wallet.Application.csproj" />
+    <ProjectReference Include="..\Wallet.Framework\Wallet.Framework.csproj" />
     <ProjectReference Include="..\Wallet.Persistence\Wallet.Persistence.csproj" />
   </ItemGroup>
 

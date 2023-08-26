@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Wallet.Application.Features.Wallet.Dtos;
 using Wallet.Application.Features.Wallet.Services;
+using Wallet.Domain.Common;
 
 namespace Wallet.Application.Features.Wallet.Queries;
 
@@ -22,7 +23,7 @@ public class WalletTransactionsQueryHandler : IRequestHandler<GetWalletTransacti
 
         var transactionDto = wallet.Transactions
             .Select(p =>
-                new TransactionWalletDto(p.Type, p.LastUpdated, p.Amount, p.NonCashSource))
+                new TransactionWalletDto(p.Type, p.LastUpdated, new PositiveMoney(p.Amount), p.NonCashSource))
             .OrderBy(p => p.LastUpdated)
             .ThenBy(v => v.Type)
             .ToList();

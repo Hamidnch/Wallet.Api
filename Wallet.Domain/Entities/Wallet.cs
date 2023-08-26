@@ -7,8 +7,8 @@ namespace Wallet.Domain.Entities
 {
     public class Wallet : AggregateRoot
     {
-        public PositiveMoney CashBalance { get; private set; } = new PositiveMoney(0);
-        public PositiveMoney NonCashBalance { get; private set; } = new PositiveMoney(0);
+        public decimal CashBalance { get; private set; } = 0;
+        public decimal NonCashBalance { get; private set; } = 0;
 
         private readonly List<TransactionWallet> _transactions = new List<TransactionWallet>();
         public virtual IReadOnlyList<TransactionWallet> Transactions => _transactions.AsReadOnly();
@@ -17,47 +17,46 @@ namespace Wallet.Domain.Entities
         public Guid UserId { get; set; }
 
 
-        public TransactionWallet IncreaseCash(PositiveMoney amount)
+        public Wallet IncreaseCash(decimal amount)
         {
-            CashBalance.Add(amount);
+            CashBalance += amount;
             var transaction = new TransactionWallet(TransactionType.CashIncrease, amount, DateTime.UtcNow);
             _transactions.Add(transaction);
 
-            return transaction;
+            return this;
         }
 
-        public TransactionWallet IncreaseNonCash(PositiveMoney amount, NonCashSource nonCashSource)
+        public Wallet IncreaseNonCash(decimal amount, NonCashSource nonCashSource)
         {
-            NonCashBalance.Add(amount);
+            NonCashBalance += amount;
 
             var transaction = new TransactionWallet(TransactionType.NonCashIncrease, amount, DateTime.UtcNow, nonCashSource);
             _transactions.Add(transaction);
 
-            return transaction;
+            return this;
         }
 
-        public TransactionWallet DecreaseCash(PositiveMoney amount)
+        public Wallet DecreaseCash(decimal amount)
         {
-            if (amount.ToDecimal > CashBalance.ToDecimal)
+            if (amount > CashBalance)
                 throw new InvalidOperationException("Insufficient cash balance");
 
-            var money = new PositiveMoney(Math.Abs(amount.ToDecimal));
-            CashBalance.Subtract(money);
+            CashBalance -= (Math.Abs(amount));
 
             var transaction = new TransactionWallet(TransactionType.CashDecrease, amount, DateTime.UtcNow);
             _transactions.Add(transaction);
 
-            return transaction;
+            return this;
         }
 
-        public TransactionWallet IncreaseCashFromReturn(PositiveMoney amount)
+        public Wallet IncreaseCashFromReturn(decimal amount)
         {
-            CashBalance.Add(amount);
+            CashBalance += amount;
 
             var transaction = new TransactionWallet(TransactionType.CashIncreaseFromReturn, amount, DateTime.UtcNow);
             _transactions.Add(transaction);
 
-            return transaction;
+            return this;
         }
 
         public override void AddEvent(BaseEvent domainEvent)

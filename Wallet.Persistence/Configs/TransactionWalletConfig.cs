@@ -9,6 +9,6 @@ public class TransactionWalletConfig : IEntityTypeConfiguration<TransactionWalle
     public void Configure(EntityTypeBuilder<TransactionWallet> builder)
     {
         builder.ToTable("TransactionsWallet");
-        builder.Property(w => w.Amount).HasConversion(new PositiveMoneyConverter());
+        //builder.Property(w => w.Amount).HasConversion(new PositiveMoneyConverter());
     }
 }

@@ -25,7 +25,7 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
 
         if (wallet is not null)
         {
-            wallet.IncreaseCash(amount);
+            wallet = wallet.IncreaseCash(amount.ToDecimal);
             await UpdateAsync(wallet);
         }
     }
@@ -36,7 +36,7 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
 
         if (wallet is not null)
         {
-            wallet.IncreaseNonCash(amount, nonCashSource);
+            wallet = wallet.IncreaseNonCash(amount.ToDecimal, nonCashSource);
             await UpdateAsync(wallet);
         }
     }
@@ -47,7 +47,7 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
 
         if (wallet is not null)
         {
-            wallet.DecreaseCash(amount);
+            wallet = wallet.DecreaseCash(amount.ToDecimal);
             await UpdateAsync(wallet);
         }
     }
@@ -58,7 +58,7 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
 
         if (wallet is not null)
         {
-            wallet.IncreaseCashFromReturn(amount);
+            wallet = wallet.IncreaseCashFromReturn(amount.ToDecimal);
             await UpdateAsync(wallet);
         }
     }

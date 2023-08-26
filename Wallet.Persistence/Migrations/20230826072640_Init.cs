@@ -37,8 +37,8 @@ namespace Wallet.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CashBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    NonCashBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CashBalance = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    NonCashBalance = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
@@ -62,7 +62,7 @@ namespace Wallet.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<byte>(type: "tinyint", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     NonCashSource = table.Column<byte>(type: "tinyint", nullable: false),
                     WalletId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
