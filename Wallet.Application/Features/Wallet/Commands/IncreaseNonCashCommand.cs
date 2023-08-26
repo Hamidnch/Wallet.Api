@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using Wallet.Common.Enums;
 using Wallet.Domain.Common;
-using Wallet.Domain.Enums;
 
 namespace Wallet.Application.Features.Wallet.Commands;
 

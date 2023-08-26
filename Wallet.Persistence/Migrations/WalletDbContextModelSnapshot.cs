@@ -46,12 +46,7 @@ namespace Wallet.Persistence.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<Guid>("WalletId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("WalletId");
 
                     b.ToTable("Users", "MI");
                 });
@@ -73,7 +68,12 @@ namespace Wallet.Persistence.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Wallets", "MI");
                 });
@@ -90,16 +90,16 @@ namespace Wallet.Persistence.Migrations
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("NonCashSource")
-                        .HasColumnType("int");
+                    b.Property<byte>("NonCashSource")
+                        .HasColumnType("tinyint");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
 
                     b.Property<Guid?>("WalletId")
                         .HasColumnType("uniqueidentifier");
@@ -111,15 +111,15 @@ namespace Wallet.Persistence.Migrations
                     b.ToTable("TransactionsWallet", "MI");
                 });
 
-            modelBuilder.Entity("Wallet.Domain.Entities.User", b =>
+            modelBuilder.Entity("Wallet.Domain.Entities.Wallet", b =>
                 {
-                    b.HasOne("Wallet.Domain.Entities.Wallet", "Wallet")
+                    b.HasOne("Wallet.Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("WalletId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Wallet");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Wallet.Domain.ValueObjects.TransactionWallet", b =>

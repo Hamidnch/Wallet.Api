@@ -1,7 +1,7 @@
-﻿using Wallet.Application.Features.Wallet.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Wallet.Application.Features.Wallet.Repositories;
+using Wallet.Common.Enums;
 using Wallet.Domain.Common;
-using Wallet.Domain.Entities;
-using Wallet.Domain.Enums;
 using Wallet.Persistence.Context;
 
 namespace Wallet.Persistence.Repositories;
@@ -14,10 +14,9 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
 
     public async Task<Domain.Entities.Wallet?> GetByUserIdAsync(Guid userId)
     {
-        var user = await Context.Set<User>().FindAsync(userId)
-                   ?? throw new Exception("user is null");
+        var wallet = await DbSet.Where(w => w.UserId == userId).FirstOrDefaultAsync();
 
-        return user.Wallet;
+        return wallet;
     }
 
     public async Task IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount)

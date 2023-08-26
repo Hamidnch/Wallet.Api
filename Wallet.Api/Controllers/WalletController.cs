@@ -44,10 +44,11 @@ namespace Wallet.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("transactions/{walletId}")]
-        public async Task<IActionResult> GetWalletTransactions(Guid walletId)
+        [HttpGet("transactions/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetWalletTransactions(Guid userId)
         {
-            var query = new GetWalletTransactionsQuery(walletId);
+            var query = new GetWalletTransactionsQuery(userId);
             var transactions = await _mediator.Send(query);
             return Ok(transactions);
         }

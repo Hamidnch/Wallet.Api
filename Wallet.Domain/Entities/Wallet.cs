@@ -1,5 +1,5 @@
-﻿using Wallet.Domain.Common;
-using Wallet.Domain.Enums;
+﻿using Wallet.Common.Enums;
+using Wallet.Domain.Common;
 using Wallet.Domain.Events;
 using Wallet.Domain.ValueObjects;
 
@@ -11,8 +11,11 @@ namespace Wallet.Domain.Entities
         public PositiveMoney NonCashBalance { get; private set; } = new PositiveMoney(0);
 
         private readonly List<TransactionWallet> _transactions = new List<TransactionWallet>();
+        public virtual IReadOnlyList<TransactionWallet> Transactions => _transactions.AsReadOnly();
 
-        public IReadOnlyList<TransactionWallet> Transactions => _transactions.AsReadOnly();
+        public virtual User? User { get; set; }
+        public Guid UserId { get; set; }
+
 
         public TransactionWallet IncreaseCash(PositiveMoney amount)
         {

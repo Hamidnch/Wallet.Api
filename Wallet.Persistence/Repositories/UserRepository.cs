@@ -13,6 +13,6 @@ public class UserRepository : Repository<User>, IUserRepository
     public async Task<Domain.Entities.Wallet?> GetWalletByUserIdAsync(Guid userId)
     {
         var user = await DbSet.FindAsync(userId);
-        return user?.Wallet;
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using Wallet.Common;
+using Wallet.Common.CommonHelpers;
 using Wallet.Domain.Entities;
 using Wallet.Domain.ValueObjects;
 
@@ -23,16 +23,6 @@ namespace Wallet.Persistence.Context
             modelBuilder.HasDefaultSchema(DefaultConstants.DefaultSchema);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
-
-        public Task<int> ExecuteSqlRawAsync(string query, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> ExecuteSqlRawAsync(string query)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using Wallet.Common;
+using Wallet.Common.CommonHelpers;
 using Wallet.Domain.Common.Exceptions;
 
 namespace Wallet.Domain.Common

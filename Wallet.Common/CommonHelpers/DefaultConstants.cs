@@ -1,4 +1,4 @@
-﻿namespace Wallet.Common
+﻿namespace Wallet.Common.CommonHelpers
 {
     public static class DefaultConstants
     {

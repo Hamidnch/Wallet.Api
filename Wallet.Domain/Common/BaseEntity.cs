@@ -67,6 +67,5 @@ namespace Wallet.Domain.Common
     }
     public abstract class BaseEntity : BaseEntity<Guid>
     {
-        public bool Deleted { get; set; }
     }
 }

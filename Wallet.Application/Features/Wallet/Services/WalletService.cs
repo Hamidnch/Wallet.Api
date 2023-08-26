@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Wallet.Application.Features.Wallet.Repositories;
+using Wallet.Common.Enums;
 using Wallet.Domain.Common;
-using Wallet.Domain.Enums;
 
 namespace Wallet.Application.Features.Wallet.Services;
 
@@ -19,9 +19,9 @@ public class WalletService : IWalletService
 
     public async Task<Domain.Entities.Wallet?> GetByUserIdAsync(Guid userId)
     {
-        var user = await _userRepository.GetByIdAsync(userId);
-
-        return user?.Wallet;
+        //var user = await _userRepository.GetByIdAsync(userId);
+        var wallet = await _walletRepository.GetByUserIdAsync(userId);
+        return wallet;
     }
 
     public async Task<Unit> IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount)

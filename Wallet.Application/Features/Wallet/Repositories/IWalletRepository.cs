@@ -1,5 +1,5 @@
-﻿using Wallet.Domain.Common;
-using Wallet.Domain.Enums;
+﻿using Wallet.Common.Enums;
+using Wallet.Domain.Common;
 
 namespace Wallet.Application.Features.Wallet.Repositories;
 

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Wallet.Application.Features.Wallet.Queries;
 using Wallet.Application.Features.Wallet.Repositories;
 using Wallet.Application.Features.Wallet.Services;
 using Wallet.Persistence.Context;
@@ -13,12 +14,15 @@ var configuration = builder.Configuration;
 
 services.AddControllers();
 
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(WalletTransactionsQueryHandler).Assembly));
 services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 services.AddDbContext<WalletDbContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("WalletDb")));
+{
+    options.UseSqlServer(configuration.GetConnectionString("WalletDb"));
+    options.UseLazyLoadingProxies();
+});
 
 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
