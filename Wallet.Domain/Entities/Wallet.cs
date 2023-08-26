@@ -10,9 +10,9 @@ namespace Wallet.Domain.Entities
         public decimal NonCashBalance { get; private set; } = 0;
 
         private readonly List<TransactionWallet> _transactions = new List<TransactionWallet>();
-        public virtual IReadOnlyList<TransactionWallet> Transactions => _transactions.AsReadOnly();
+        public IReadOnlyCollection<TransactionWallet> Transactions => _transactions.AsReadOnly();
 
-        public virtual User? User { get; set; }
+        public User? User { get; set; }
         public Guid UserId { get; set; }
 
 

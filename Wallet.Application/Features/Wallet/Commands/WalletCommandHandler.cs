@@ -21,7 +21,7 @@ namespace Wallet.Application.Features.Wallet.Commands
 
         public async Task Handle(IncreaseCashCommand command, CancellationToken cancellationToken)
         {
-            await _walletService.IncreaseCashBalanceAsync(command.UserId, command.Amount);
+            await _walletService.IncreaseCashBalanceAsync(command.UserId, command.Amount, cancellationToken);
             await _mediator.Publish(new CashBalanceIncreasedEvent(command.UserId,
                 command.Amount), cancellationToken);
 
@@ -30,7 +30,7 @@ namespace Wallet.Application.Features.Wallet.Commands
 
         public async Task Handle(IncreaseNonCashCommand command, CancellationToken cancellationToken)
         {
-            await _walletService.IncreaseNonCashBalanceAsync(command.UserId, command.Amount, command.NonCashSource);
+            await _walletService.IncreaseNonCashBalanceAsync(command.UserId, command.Amount, command.NonCashSource, cancellationToken);
             await _mediator.Publish(
                 new NonCashBalanceIncreasedEvent(command.UserId, command.Amount, command.NonCashSource), cancellationToken);
 
@@ -39,7 +39,7 @@ namespace Wallet.Application.Features.Wallet.Commands
 
         public async Task Handle(DecreaseCashCommand command, CancellationToken cancellationToken)
         {
-            await _walletService.DecreaseCashBalanceAsync(command.UserId, command.Amount);
+            await _walletService.DecreaseCashBalanceAsync(command.UserId, command.Amount, cancellationToken);
             await _mediator.Publish(
                 new CashBalanceDecreasedEvent(command.UserId, command.Amount), cancellationToken);
 
@@ -48,7 +48,7 @@ namespace Wallet.Application.Features.Wallet.Commands
 
         public async Task Handle(IncreaseCashFromReturnCommand command, CancellationToken cancellationToken)
         {
-            await _walletService.IncreaseCashFromReturnAsync(command.UserId, command.Amount);
+            await _walletService.IncreaseCashFromReturnAsync(command.UserId, command.Amount, cancellationToken);
             await _mediator.Publish(
                 new CashFromReturnIncreasedEvent(command.UserId, command.Amount), cancellationToken);
 

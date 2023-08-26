@@ -23,6 +23,39 @@ namespace Wallet.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Wallet.Domain.Entities.TransactionWallet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18, 6)");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("NonCashSource")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
+
+                    b.Property<Guid?>("WalletId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("TransactionsWallet", "MI");
+                });
+
             modelBuilder.Entity("Wallet.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -78,37 +111,12 @@ namespace Wallet.Persistence.Migrations
                     b.ToTable("Wallets", "MI");
                 });
 
-            modelBuilder.Entity("Wallet.Domain.ValueObjects.TransactionWallet", b =>
+            modelBuilder.Entity("Wallet.Domain.Entities.TransactionWallet", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18, 6)");
-
-                    b.Property<DateTime>("LastUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte>("NonCashSource")
-                        .HasColumnType("tinyint");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("tinyint");
-
-                    b.Property<Guid?>("WalletId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WalletId");
-
-                    b.ToTable("TransactionsWallet", "MI");
+                    b.HasOne("Wallet.Domain.Entities.Wallet", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("WalletId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Wallet.Domain.Entities.Wallet", b =>
@@ -120,14 +128,6 @@ namespace Wallet.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Wallet.Domain.ValueObjects.TransactionWallet", b =>
-                {
-                    b.HasOne("Wallet.Domain.Entities.Wallet", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("WalletId")
-                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Wallet.Domain.Entities.Wallet", b =>

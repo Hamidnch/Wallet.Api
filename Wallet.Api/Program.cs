@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Wallet.Application;
 using Wallet.Application.Features.Wallet.Queries;
 using Wallet.Application.Features.Wallet.Repositories;
 using Wallet.Application.Features.Wallet.Services;
@@ -21,7 +22,7 @@ services.AddAutoMapper(Assembly.GetExecutingAssembly());
 services.AddDbContext<WalletDbContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("WalletDb"));
-    options.UseLazyLoadingProxies();
+    //options.UseLazyLoadingProxies();
 });
 
 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

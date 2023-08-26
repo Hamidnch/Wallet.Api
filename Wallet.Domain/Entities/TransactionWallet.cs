@@ -4,14 +4,12 @@ using Wallet.Domain.Events;
 
 namespace Wallet.Domain.Entities;
 
-public class TransactionWallet : AggregateRoot //: ValueObject<TransactionWallet>
+public class TransactionWallet : AggregateRoot
 {
     public TransactionType Type { get; private set; }
     public DateTime LastUpdated { get; private set; }
     public decimal Amount { get; private set; }
     public NonCashSource NonCashSource { get; private set; }
-
-    //public Entities.Wallet Wallet { get; set; } = new Entities.Wallet();
 
     public TransactionWallet(TransactionType type,
         decimal amount, DateTime lastUpdated,
@@ -22,14 +20,6 @@ public class TransactionWallet : AggregateRoot //: ValueObject<TransactionWallet
         NonCashSource = nonCashSource;
         LastUpdated = lastUpdated;
     }
-
-    //protected override IEnumerable<object> GetEqualityComponents()
-    //{
-    //    yield return Type;
-    //    yield return Amount;
-    //    yield return NonCashSource;
-    //    yield return LastUpdated;
-    //}
 
     public override void AddEvent(BaseEvent domainEvent)
     {

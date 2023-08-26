@@ -9,45 +9,45 @@ public class WalletService : IWalletService
 {
     private readonly IWalletRepository _walletRepository;
 
-    private readonly IUserRepository _userRepository;
-
-    public WalletService(IWalletRepository walletRepository, IUserRepository userRepository)
+    public WalletService(IWalletRepository walletRepository)
     {
         _walletRepository = walletRepository;
-        _userRepository = userRepository;
     }
 
-    public async Task<Domain.Entities.Wallet?> GetByUserIdAsync(Guid userId)
+    public async Task<Domain.Entities.Wallet?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
     {
-        //var user = await _userRepository.GetByIdAsync(userId);
-        var wallet = await _walletRepository.GetByUserIdAsync(userId);
+        var wallet = await _walletRepository.GetByUserIdAsync(userId, cancellationToken);
+
+        if (wallet != null)
+            await _walletRepository.LoadCollectionAsync(wallet, w => w.Transactions, cancellationToken);
+
         return wallet;
     }
 
-    public async Task<Unit> IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount)
+    public async Task<Unit> IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)
     {
-        await _walletRepository.IncreaseCashBalanceAsync(userId, amount);
+        await _walletRepository.IncreaseCashBalanceAsync(userId, amount, cancellationToken);
 
         return Unit.Value;
     }
 
-    public async Task<Unit> IncreaseNonCashBalanceAsync(Guid userId, PositiveMoney amount, NonCashSource nonCashSource)
+    public async Task<Unit> IncreaseNonCashBalanceAsync(Guid userId, PositiveMoney amount, NonCashSource nonCashSource, CancellationToken cancellationToken)
     {
-        await _walletRepository.IncreaseNonCashBalanceAsync(userId, amount, nonCashSource);
+        await _walletRepository.IncreaseNonCashBalanceAsync(userId, amount, nonCashSource, cancellationToken);
 
         return Unit.Value;
     }
 
-    public async Task<Unit> DecreaseCashBalanceAsync(Guid userId, PositiveMoney amount)
+    public async Task<Unit> DecreaseCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)
     {
-        await _walletRepository.DecreaseCashBalanceAsync(userId, amount);
+        await _walletRepository.DecreaseCashBalanceAsync(userId, amount, cancellationToken);
 
         return Unit.Value;
     }
 
-    public async Task<Unit> IncreaseCashFromReturnAsync(Guid userId, PositiveMoney amount)
+    public async Task<Unit> IncreaseCashFromReturnAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)
     {
-        await _walletRepository.IncreaseCashFromReturnAsync(userId, amount);
+        await _walletRepository.IncreaseCashFromReturnAsync(userId, amount, cancellationToken);
 
         return Unit.Value;
     }

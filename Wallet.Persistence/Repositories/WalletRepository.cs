@@ -8,20 +8,23 @@ namespace Wallet.Persistence.Repositories;
 
 public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepository
 {
-    public WalletRepository(WalletDbContext context) : base(context)
+    public WalletRepository(WalletDbContext dbContext)
+        : base(dbContext)
     {
     }
 
-    public async Task<Domain.Entities.Wallet?> GetByUserIdAsync(Guid userId)
+    public async Task<Domain.Entities.Wallet?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
     {
-        var wallet = await DbSet.Where(w => w.UserId == userId).FirstOrDefaultAsync();
+        var wallet = await Entities
+            .Where(w => w.UserId == userId)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
         return wallet;
     }
 
-    public async Task IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount)
+    public async Task IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)
     {
-        var wallet = await GetByUserIdAsync(userId);
+        var wallet = await GetByUserIdAsync(userId, cancellationToken);
 
         if (wallet is not null)
         {
@@ -30,9 +33,9 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
         }
     }
 
-    public async Task IncreaseNonCashBalanceAsync(Guid userId, PositiveMoney amount, NonCashSource nonCashSource)
+    public async Task IncreaseNonCashBalanceAsync(Guid userId, PositiveMoney amount, NonCashSource nonCashSource, CancellationToken cancellationToken)
     {
-        var wallet = await GetByUserIdAsync(userId);
+        var wallet = await GetByUserIdAsync(userId, cancellationToken);
 
         if (wallet is not null)
         {
@@ -41,9 +44,9 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
         }
     }
 
-    public async Task DecreaseCashBalanceAsync(Guid userId, PositiveMoney amount)
+    public async Task DecreaseCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)
     {
-        var wallet = await GetByUserIdAsync(userId);
+        var wallet = await GetByUserIdAsync(userId, cancellationToken);
 
         if (wallet is not null)
         {
@@ -52,9 +55,9 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
         }
     }
 
-    public async Task IncreaseCashFromReturnAsync(Guid userId, PositiveMoney amount)
+    public async Task IncreaseCashFromReturnAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)
     {
-        var wallet = await GetByUserIdAsync(userId);
+        var wallet = await GetByUserIdAsync(userId, cancellationToken);
 
         if (wallet is not null)
         {

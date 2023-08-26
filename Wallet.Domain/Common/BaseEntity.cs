@@ -55,12 +55,12 @@ namespace Wallet.Domain.Common
                 return base.GetHashCode();
         }
 
-        public static bool operator ==(BaseEntity<TKey> left, BaseEntity<TKey> right)
+        public static bool operator ==(BaseEntity<TKey>? left, BaseEntity<TKey>? right)
         {
             return left?.Equals(right) ?? Equals(right, null);
         }
 
-        public static bool operator !=(BaseEntity<TKey> left, BaseEntity<TKey> right)
+        public static bool operator !=(BaseEntity<TKey>? left, BaseEntity<TKey>? right)
         {
             return !(left == right);
         }
