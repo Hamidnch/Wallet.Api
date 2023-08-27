@@ -4,13 +4,18 @@ namespace Wallet.Common.Enums;
 
 public enum TransactionType : byte
 {
-    None,
+    None = 0,
     [Display(Name = "افزایش نقدی")]
-    CashIncrease,
-    [Display(Name = "افزایش غیرنقدی")]
-    NonCashIncrease,
+    CashIncrease = 1,
+    [Display(Name = "افزایش نقدی - برگشت پول سفارش")]
+    CashIncreaseFromReturn = 2,
+    [Display(Name = "افزایش غیرنقدی - کد هدیه")]
+    NonCashGiftCodeIncrease = 3,
+    [Display(Name = "افزایش غیرنقدی - معرف")]
+    NonCashReferralIncrease = 4,
+    [Display(Name = "افزایش غیرنقدی - سایتهای اقساطی")]
+    NonCashInstallmentIncrease = 5,
     [Display(Name = "برداشت نقدی")]
-    CashDecrease,
-    [Display(Name = "افزایش نقدی حاصل از برگشت پول سفارش")]
-    CashIncreaseFromReturn
+    CashDecrease = 6
+
 }

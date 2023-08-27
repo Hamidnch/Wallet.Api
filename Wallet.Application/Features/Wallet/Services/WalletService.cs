@@ -41,13 +41,13 @@ public class WalletService : IWalletService
         var transactions = wallet.Transactions as IEnumerable<TransactionWallet>;
 
         if (date != null && date != DateTime.MinValue /*&& date.ToString() != "{1/1/0001 12:00:00 AM}"*/)
-            transactions = transactions.Where(t => t.LastUpdated == date.Value);
+            transactions = transactions.Where(t => t.CreatedOn == date.Value);
 
         if (transactionType != TransactionType.None)
             transactions = transactions.Where(t => t.Type == transactionType);
 
         var transactionDto = transactions.Select(p =>
-                new TransactionsWalletResponseDto(p.Type, p.LastUpdated,
+                new TransactionsWalletResponseDto(p.Type, p.CreatedOn,
                     new PositiveMoney(p.Amount), p.NonCashSource))
             .OrderBy(t => t.LastUpdated)
             .ThenBy(t => t.Type); ;

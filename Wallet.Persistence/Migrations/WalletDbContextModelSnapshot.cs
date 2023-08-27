@@ -32,7 +32,7 @@ namespace Wallet.Persistence.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18, 6)");
 
-                    b.Property<DateTime>("LastUpdated")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<byte>("NonCashSource")

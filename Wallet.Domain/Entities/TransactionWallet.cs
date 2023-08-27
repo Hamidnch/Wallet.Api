@@ -7,18 +7,18 @@ namespace Wallet.Domain.Entities;
 public class TransactionWallet : AggregateRoot
 {
     public TransactionType Type { get; private set; }
-    public DateTime LastUpdated { get; private set; }
+    public DateTime CreatedOn { get; private set; }
     public decimal Amount { get; private set; }
     public NonCashSource NonCashSource { get; private set; }
 
     public TransactionWallet(TransactionType type,
-        decimal amount, DateTime lastUpdated,
+        decimal amount, DateTime createdOn,
         NonCashSource nonCashSource = NonCashSource.Others)
     {
         Type = type;
         Amount = amount;
         NonCashSource = nonCashSource;
-        LastUpdated = lastUpdated;
+        CreatedOn = createdOn;
     }
 
     public override void AddEvent(BaseEvent domainEvent)

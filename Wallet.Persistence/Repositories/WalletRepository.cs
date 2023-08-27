@@ -50,7 +50,7 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
 
         if (wallet is not null)
         {
-            wallet = wallet.DecreaseCash(amount.ToDecimal);
+            wallet = wallet.WithdrawCash(amount.ToDecimal);
             await UpdateAsync(wallet);
         }
     }

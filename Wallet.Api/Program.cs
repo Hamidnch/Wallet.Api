@@ -68,7 +68,7 @@ app.Run();
 //user.Wallet.IncreaseNonCash(50, "Gift Code");
 
 //// Decrease cash balance by 30
-//user.Wallet.DecreaseCash(30);
+//user.Wallet.WithdrawCash(30);
 
 //// Increase cash balance from a return by 20
 //user.Wallet.IncreaseCashFromReturn(20);
