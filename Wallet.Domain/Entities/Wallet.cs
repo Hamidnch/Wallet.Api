@@ -53,28 +53,17 @@ namespace Wallet.Domain.Entities
         {
             NonCashBalance += amount;
 
-            var transaction =
-                new TransactionWallet(TransactionType.NonCashGiftCodeIncrease, amount, DateTime.UtcNow, nonCashSource);
-            _transactions.Add(transaction);
-
-            return this;
-        }
-
-        /// <summary>
-        /// برداشت وجه نقدی
-        /// </summary>
-        /// <param name="amount"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
-        public Wallet WithdrawCash(decimal amount)
-        {
-            if (amount > CashBalance)
-                throw new InvalidOperationException("Insufficient cash balance");
-
-            CashBalance -= Math.Abs(amount);
+            var type = nonCashSource switch
+            {
+                NonCashSource.GiftCode => TransactionType.NonCashGiftCodeIncrease,
+                NonCashSource.Referral => TransactionType.NonCashReferralIncrease,
+                NonCashSource.InstallmentsSites => TransactionType.NonCashInstallmentIncrease,
+                NonCashSource.Others => TransactionType.None,
+                _ => TransactionType.None
+            };
 
             var transaction =
-                new TransactionWallet(TransactionType.CashDecrease, amount, DateTime.UtcNow);
+                new TransactionWallet(type, amount, DateTime.UtcNow, nonCashSource);
             _transactions.Add(transaction);
 
             return this;
@@ -91,6 +80,27 @@ namespace Wallet.Domain.Entities
 
             var transaction =
                 new TransactionWallet(TransactionType.CashIncreaseFromReturn, amount, DateTime.UtcNow);
+            _transactions.Add(transaction);
+
+            return this;
+        }
+
+
+        /// <summary>
+        /// برداشت وجه نقدی
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public Wallet WithdrawCash(decimal amount)
+        {
+            if (amount > CashBalance)
+                throw new InvalidOperationException("Insufficient cash balance");
+
+            CashBalance -= Math.Abs(amount);
+
+            var transaction =
+                new TransactionWallet(TransactionType.CashDecrease, amount, DateTime.UtcNow);
             _transactions.Add(transaction);
 
             return this;

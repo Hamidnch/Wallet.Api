@@ -44,17 +44,6 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
         }
     }
 
-    public async Task DecreaseCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)
-    {
-        var wallet = await GetByUserIdAsync(userId, cancellationToken);
-
-        if (wallet is not null)
-        {
-            wallet = wallet.WithdrawCash(amount.ToDecimal);
-            await UpdateAsync(wallet);
-        }
-    }
-
     public async Task IncreaseCashFromReturnAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)
     {
         var wallet = await GetByUserIdAsync(userId, cancellationToken);
@@ -62,6 +51,17 @@ public class WalletRepository : Repository<Domain.Entities.Wallet>, IWalletRepos
         if (wallet is not null)
         {
             wallet = wallet.IncreaseCashFromReturn(amount.ToDecimal);
+            await UpdateAsync(wallet);
+        }
+    }
+
+    public async Task WithdrawCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)
+    {
+        var wallet = await GetByUserIdAsync(userId, cancellationToken);
+
+        if (wallet is not null)
+        {
+            wallet = wallet.WithdrawCash(amount.ToDecimal);
             await UpdateAsync(wallet);
         }
     }

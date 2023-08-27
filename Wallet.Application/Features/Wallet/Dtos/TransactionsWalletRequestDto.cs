@@ -2,4 +2,4 @@
 
 namespace Wallet.Application.Features.Wallet.Dtos;
 
-public record TransactionsWalletRequestDto(Guid UserId, TransactionType Type, DateTime TransactionDate);
+public record TransactionsWalletRequestDto(Guid UserId, TransactionType Type, DateTime? From, DateTime? To);

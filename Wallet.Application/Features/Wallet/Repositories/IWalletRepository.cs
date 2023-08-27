@@ -9,6 +9,6 @@ public interface IWalletRepository : IRepository<Domain.Entities.Wallet>
 
     Task IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken);
     Task IncreaseNonCashBalanceAsync(Guid userId, PositiveMoney amount, NonCashSource nonCashSource, CancellationToken cancellationToken);
-    Task DecreaseCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken);
     Task IncreaseCashFromReturnAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken);
+    Task WithdrawCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken);
 }

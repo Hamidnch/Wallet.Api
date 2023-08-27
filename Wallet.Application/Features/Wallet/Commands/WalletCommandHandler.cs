@@ -37,20 +37,20 @@ namespace Wallet.Application.Features.Wallet.Commands
             //_user.AddEvent(new WalletTransactionAddedEvent(_user.Wallet.Id, transaction));
         }
 
-        public async Task Handle(DecreaseCashCommand command, CancellationToken cancellationToken)
-        {
-            await _walletService.DecreaseCashBalanceAsync(command.UserId, command.Amount, cancellationToken);
-            await _mediator.Publish(
-                new CashBalanceDecreasedEvent(command.UserId, command.Amount), cancellationToken);
-
-            //_user.AddEvent(new WalletTransactionAddedEvent(_user.Wallet.Id, transaction));
-        }
-
         public async Task Handle(IncreaseCashFromReturnCommand command, CancellationToken cancellationToken)
         {
             await _walletService.IncreaseCashFromReturnAsync(command.UserId, command.Amount, cancellationToken);
             await _mediator.Publish(
                 new CashFromReturnIncreasedEvent(command.UserId, command.Amount), cancellationToken);
+
+            //_user.AddEvent(new WalletTransactionAddedEvent(_user.Wallet.Id, transaction));
+        }
+
+        public async Task Handle(DecreaseCashCommand command, CancellationToken cancellationToken)
+        {
+            await _walletService.WithdrawCashBalanceAsync(command.UserId, command.Amount, cancellationToken);
+            await _mediator.Publish(
+                new CashBalanceDecreasedEvent(command.UserId, command.Amount), cancellationToken);
 
             //_user.AddEvent(new WalletTransactionAddedEvent(_user.Wallet.Id, transaction));
         }

@@ -21,7 +21,8 @@ public class WalletTransactionsQueryHandler : IRequestHandler<GetWalletTransacti
             return new List<TransactionsWalletResponseDto>();
 
         var transactionDto =
-            await _walletService.GetAllTransactionsByWalletId(CancellationToken.None, wallet.Id, query.RequestDto.TransactionDate, query.RequestDto.Type);
+            await _walletService.GetAllTransactionsByWalletId(CancellationToken.None,
+                wallet.Id, query.RequestDto.From, query.RequestDto.To, query.RequestDto.Type);
 
         return transactionDto;
     }

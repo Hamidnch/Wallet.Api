@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -61,7 +60,7 @@ namespace Wallet.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<byte>(type: "tinyint", nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     NonCashSource = table.Column<byte>(type: "tinyint", nullable: false),
                     WalletId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),

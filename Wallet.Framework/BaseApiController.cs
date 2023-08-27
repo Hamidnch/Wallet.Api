@@ -1,8 +1,10 @@
-﻿//namespace Wallet.Framework;
+﻿using Microsoft.AspNetCore.Mvc;
 
-//[ApiController]
-//[Route("api/[controller]")]
-//public class BaseApiController : ControllerBase
-//{
+namespace Wallet.Framework;
 
-//}
+[ApiController]
+[Route("api/[controller]")]
+public class BaseApiController : ControllerBase
+{
+
+}

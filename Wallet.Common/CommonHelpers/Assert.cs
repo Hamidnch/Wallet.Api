@@ -4,6 +4,11 @@ namespace Wallet.Common.CommonHelpers;
 
 public static class Assert
 {
+    public static void CheckValidGuid(Guid guid)
+    {
+        if (guid == Guid.Empty || guid == default)
+            throw new ArgumentNullException($"{guid} is invalid.");
+    }
     public static void NotNull<T>(T obj, string name, string? message = null) where T : class
     {
         if (obj is null)
