@@ -15,7 +15,7 @@ namespace Wallet.Domain.Common
 
             mobileNumber = mobileNumber.Trim();
 
-            if (!Regex.IsMatch(mobileNumber, Helper.RegExMobileValidation))
+            if (!Regex.IsMatch(mobileNumber, StaticHelper.RegExMobileValidation))
                 throw new InvalidMobileNumberException($"Invalid {nameof(mobileNumber)} format.");
 
             _mobileNumber = mobileNumber;

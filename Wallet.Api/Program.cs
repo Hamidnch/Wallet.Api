@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Wallet.Application;
 using Wallet.Application.Features.Wallet.Queries;
 using Wallet.Application.Features.Wallet.Repositories;
@@ -13,7 +14,9 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 
-services.AddControllers();
+services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(WalletTransactionsQueryHandler).Assembly));

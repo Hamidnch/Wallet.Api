@@ -4,6 +4,7 @@ namespace Wallet.Common.Enums;
 
 public enum TransactionType : byte
 {
+    None,
     [Display(Name = "افزایش نقدی")]
     CashIncrease,
     [Display(Name = "افزایش غیرنقدی")]

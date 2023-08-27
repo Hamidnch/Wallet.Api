@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Wallet.Application.Features.Wallet.Commands;
+using Wallet.Application.Features.Wallet.Dtos;
 using Wallet.Application.Features.Wallet.Queries;
 using Wallet.Domain.Common;
 using Wallet.Framework.ViewModels;
@@ -58,11 +59,12 @@ namespace Wallet.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("transactions/{userId}")]
+        [HttpGet("transactions")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetWalletTransactions(Guid userId)
+        public async Task<IActionResult> GetWalletTransactions([FromQuery] GetTransactionsWalletViewModel model)
         {
-            var query = new GetWalletTransactionsQuery(userId);
+            var dto = new TransactionsWalletRequestDto(model.UserId, model.Type, model.TransactionDate);
+            var query = new GetWalletTransactionsQuery(dto);
             var transactions = await _mediator.Send(query);
 
             return Ok(transactions);

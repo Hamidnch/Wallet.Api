@@ -3,4 +3,4 @@ using Wallet.Application.Features.Wallet.Dtos;
 
 namespace Wallet.Application.Features.Wallet.Queries;
 
-public record GetWalletTransactionsQuery(Guid UserId) : IRequest<IReadOnlyList<TransactionWalletDto>>;
+public record GetWalletTransactionsQuery(TransactionsWalletRequestDto RequestDto) : IRequest<IReadOnlyList<TransactionsWalletResponseDto>>;
