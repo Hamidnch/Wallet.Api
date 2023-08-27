@@ -1,13 +1,14 @@
 ﻿using MediatR;
+using Wallet.Application.Features.Wallet.Commands;
 using Wallet.Application.Features.Wallet.Services;
 using Wallet.Domain.Events;
 
-namespace Wallet.Application.Features.Wallet.Commands
+namespace Wallet.Application.Features.Wallet.Handlers.Command
 {
     public class WalletCommandHandler :
         IRequestHandler<IncreaseCashCommand>,
         IRequestHandler<IncreaseNonCashCommand>,
-        IRequestHandler<DecreaseCashCommand>,
+        IRequestHandler<WithdrawCashCommand>,
         IRequestHandler<IncreaseCashFromReturnCommand>
     {
         private readonly IWalletService _walletService;
@@ -46,7 +47,7 @@ namespace Wallet.Application.Features.Wallet.Commands
             //_user.AddEvent(new WalletTransactionAddedEvent(_user.Wallet.Id, transaction));
         }
 
-        public async Task Handle(DecreaseCashCommand command, CancellationToken cancellationToken)
+        public async Task Handle(WithdrawCashCommand command, CancellationToken cancellationToken)
         {
             await _walletService.WithdrawCashBalanceAsync(command.UserId, command.Amount, cancellationToken);
             await _mediator.Publish(

@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Wallet.Application;
-using Wallet.Application.Features.Wallet.Queries;
+using Wallet.Application.AutoMapperProfiles;
+using Wallet.Application.Features.Wallet.Handlers.Query;
 using Wallet.Application.Features.Wallet.Repositories;
 using Wallet.Application.Features.Wallet.Services;
 using Wallet.Persistence.Context;
@@ -18,6 +19,7 @@ services.AddControllers()
     .AddJsonOptions(options =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
+services.AddAutoMapper(typeof(MappingProfile));
 services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(WalletTransactionsQueryHandler).Assembly));
 services.AddAutoMapper(Assembly.GetExecutingAssembly());

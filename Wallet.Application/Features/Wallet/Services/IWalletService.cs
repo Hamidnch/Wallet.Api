@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Wallet.Application.Features.Wallet.Dtos;
+using Wallet.Application.Features.Wallet.Dtos.Response;
 using Wallet.Common.Enums;
 using Wallet.Domain.Common;
 

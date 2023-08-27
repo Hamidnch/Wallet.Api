@@ -1,8 +1,9 @@
 ﻿using MediatR;
-using Wallet.Application.Features.Wallet.Dtos;
+using Wallet.Application.Features.Wallet.Dtos.Response;
+using Wallet.Application.Features.Wallet.Queries;
 using Wallet.Application.Features.Wallet.Services;
 
-namespace Wallet.Application.Features.Wallet.Queries;
+namespace Wallet.Application.Features.Wallet.Handlers.Query;
 
 public class WalletTransactionsQueryHandler : IRequestHandler<GetWalletTransactionsQuery, IReadOnlyList<TransactionsWalletResponseDto>>
 {

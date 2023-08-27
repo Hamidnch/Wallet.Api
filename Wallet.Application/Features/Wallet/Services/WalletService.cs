@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Wallet.Application.Features.Wallet.Dtos;
+using Wallet.Application.Features.Wallet.Dtos.Response;
 using Wallet.Application.Features.Wallet.Repositories;
 using Wallet.Common.CommonHelpers;
 using Wallet.Common.Enums;
@@ -13,10 +14,12 @@ namespace Wallet.Application.Features.Wallet.Services;
 public class WalletService : IWalletService
 {
     private readonly IWalletRepository _walletRepository;
+    private readonly IMapper _mapper;
 
-    public WalletService(IWalletRepository walletRepository)
+    public WalletService(IWalletRepository walletRepository, IMapper mapper)
     {
         _walletRepository = walletRepository;
+        _mapper = mapper;
     }
 
     public async Task<Domain.Entities.Wallet?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
@@ -47,19 +50,16 @@ public class WalletService : IWalletService
         if (to.HasValue)
             transactions = transactions.Where(t => t.CreatedOn <= to.Value);
 
-        //if (from != null && from != DateTime.MinValue /*&& from.ToString() != "{1/1/0001 12:00:00 AM}"*/)
-        //    transactions = transactions.Where(t => t.CreatedOn == from.Value);
-
         if (transactionType != TransactionType.None)
             transactions = transactions.Where(t => t.Type == transactionType);
 
-        var transactionDto = transactions.Select(p =>
-                new TransactionsWalletResponseDto(p.Type, p.CreatedOn,
-                    new PositiveMoney(p.Amount), p.NonCashSource))
-            .OrderBy(t => t.CreatedOn)
-            .ThenBy(t => t.Type);
+        var transactionDtos =
+            _mapper.Map<IEnumerable<TransactionWallet>, IEnumerable<TransactionsWalletResponseDto>>(transactions);
 
-        return await transactionDto.ToListAsync();
+        return await transactionDtos
+            .OrderBy(t => t.CreatedOn)
+            .ThenBy(t => t.Type)
+            .ToListAsync();
     }
 
     public async Task<Unit> IncreaseCashBalanceAsync(Guid userId, PositiveMoney amount, CancellationToken cancellationToken)

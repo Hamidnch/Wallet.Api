@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Wallet.Application.Features.Wallet.Commands;
-using Wallet.Application.Features.Wallet.Dtos;
+using Wallet.Application.Features.Wallet.Dtos.Request;
 using Wallet.Application.Features.Wallet.Queries;
 using Wallet.Domain.Common;
 using Wallet.Framework;
-using Wallet.Framework.ViewModels;
 
 namespace Wallet.Api.Controllers;
 
@@ -19,40 +18,40 @@ public class WalletController : BaseApiController
     }
 
     [HttpPost("increase/cash")]
-    public async Task<IActionResult> IncreaseCash([FromQuery] IncreaseCashViewModel model)
+    public async Task<IActionResult> IncreaseCash([FromQuery] IncreaseCashDto dto)
     {
         var command =
-            new IncreaseCashCommand(model.UserId, new PositiveMoney(model.Money));
+            new IncreaseCashCommand(dto.UserId, new PositiveMoney(dto.Amount));
         await _mediator.Send(command);
 
         return Ok();
     }
 
     [HttpPost("increase/noncash")]
-    public async Task<IActionResult> IncreaseNonCash([FromQuery] IncreaseNonCashViewModel model)
+    public async Task<IActionResult> IncreaseNonCash([FromQuery] IncreaseNonCashDto dto)
     {
         var command =
-            new IncreaseNonCashCommand(model.UserId, new PositiveMoney(model.Amount), model.NonCashSource);
+            new IncreaseNonCashCommand(dto.UserId, new PositiveMoney(dto.Amount), dto.NonCashSource);
         await _mediator.Send(command);
 
         return Ok();
     }
 
     [HttpPost("withdraw/cash")]
-    public async Task<IActionResult> WithdrawCash([FromQuery] DecreaseCashViewModel model)
+    public async Task<IActionResult> WithdrawCash([FromQuery] WithdrawCashDto dto)
     {
         var command =
-            new DecreaseCashCommand(model.UserId, new PositiveMoney(model.Amount));
+            new WithdrawCashCommand(dto.UserId, new PositiveMoney(dto.Amount));
         await _mediator.Send(command);
 
         return Ok();
     }
 
     [HttpPost("increase/cashfromreturn")]
-    public async Task<IActionResult> IncreaseCashFromReturn([FromQuery] IncreaseCashFromReturnViewModel model)
+    public async Task<IActionResult> IncreaseCashFromReturn([FromQuery] IncreaseCashFromReturnDto dto)
     {
         var command =
-            new IncreaseCashFromReturnCommand(model.UserId, new PositiveMoney(model.Amount));
+            new IncreaseCashFromReturnCommand(dto.UserId, new PositiveMoney(dto.Amount));
         await _mediator.Send(command);
 
         return Ok();
@@ -60,9 +59,9 @@ public class WalletController : BaseApiController
 
     [HttpGet("transactions")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetWalletTransactions([FromQuery] GetTransactionsWalletViewModel model)
+    public async Task<IActionResult> GetWalletTransactions([FromQuery] TransactionsWalletRequestDto dto)
     {
-        var dto = new TransactionsWalletRequestDto(model.UserId, model.Type, model.From, model.To);
+        //var dto = new TransactionsWalletRequestDto(dto.UserId, dto.Type, dto.From, dto.To);
         var query = new GetWalletTransactionsQuery(dto);
         var transactions = await _mediator.Send(query);
 
